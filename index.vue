@@ -46,7 +46,7 @@
         :style="{width, height, backgroundColor}">
         <div :id="windowId + '-' + 'header'" class="vue-window-modal-header">
             <h2>{{title}}</h2>
-            <img src="./close.png" @click="$emit('clickClose')">
+            <img src="./close.png" @click="active = false">
         </div>
         <slot name="default"></slot>
     </div>
@@ -195,12 +195,22 @@
             }
         },
         mounted() {
+            
             this.dragElement()
+            
             this.getThisWindowAndHeaderElements().window.addEventListener('click', () => {
                 this.sendWindowToHighest()
             })
+
             this.getThisWindowAndHeaderElements().window.style.zIndex = 9999
+        
+            if (this.active) {
+                this.show()
+                this.sendWindowToHighest()
+                this.centerWindow()
+            }
         }
     }
 
 </script>
+ 
